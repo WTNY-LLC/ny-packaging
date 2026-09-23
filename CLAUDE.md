@@ -36,17 +36,21 @@ A page is two pieces:
 - a tab button in the nav: `<button class="tab" data-tab="mypage" data-beta>My page</button>`
 - a container in `<main>`: `<div id="view-mypage" hidden> ... </div>`
 
-**A new page keeps `data-beta` until its owner says it is ready.** The crew does not see it; it
-shows only when the address ends in `?beta` (https://wtny-llc.github.io/ny-packaging/?beta).
-Removing `data-beta` is the launch.
+**A new page keeps `data-beta` until its owner says it is ready.** The crew does not see it.
+People marked `beta = true` in `ny_members` (Gianni and Kelsey) see it automatically after signing
+in; anyone else sees it only if the address ends in `?beta`. Removing `data-beta` is the launch.
+
+Kelsey's own page is the `kelsey` tab (`view-kelsey`); build her requests there unless she asks
+for something else.
 
 ## Data
 
 - Every table here is live data the crew sees. Test with rows you create and delete them after.
 - Never delete or bulk-update rows you did not create. Never run an UPDATE or DELETE without a
   WHERE that names exactly the rows meant.
-- **Who can sign in** is the `ny_members` table (one email per row). Signing in with any other
-  Google account shows no data.
+- **Who can sign in** is the `ny_members` table (one email per row, plus a `beta` flag for who sees
+  in-progress pages). Signing in with any other Google account is refused. Adding someone is one
+  INSERT into `ny_members`; keep member emails out of committed files (this repo is public).
 - **Structure changes** (new tables, columns, access rules) are run against the database with the
   connection string in `.env.local` (never committed; ask Gianni for it). Save every change you run
   as a numbered file in `supabase/migrations/` (for example `002-add-waste-log.sql`) and commit it,

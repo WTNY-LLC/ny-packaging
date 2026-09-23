@@ -781,6 +781,11 @@ function todayISO(){
    Nothing else to wire. A page still being built gets data-beta on its button: it stays hidden
    from the crew and shows only when the URL carries ?beta (see CLAUDE.md). */
 if (!/[?&]beta\b/.test(location.search)) document.querySelectorAll('.tab[data-beta]').forEach(t => t.hidden = true);
+// people marked beta in ny_members (the page's builders) see in-progress tabs without ?beta
+async function showBetaTabsIfAllowed(){
+  const { data } = await sb.rpc('can_see_beta');
+  if (data === true) document.querySelectorAll('.tab[data-beta]').forEach(t => { t.hidden = false; t.title = 'In progress: only builders see this tab'; });
+}
 document.getElementById('tabs').addEventListener('click', e => {
   const btn = e.target.closest('.tab'); if (!btn) return;
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t === btn));
@@ -4477,7 +4482,7 @@ async function openApp(){
   if (staff !== true){
     await sb.auth.signOut({ scope: 'local' });
     const g = document.getElementById('login-gate'); if (g) g.classList.remove('hidden');
-    loginErr('This account isn\'t authorized — sign in with your @' + AUTH_DOMAIN + ' Google account.');
+    loginErr('This account isn\'t on the NY Packaging list. Ask Gianni or Kelsey to add you.');
     showGISButton();   // make sure the gate actually has a sign-in button on this path
     return;
   }
@@ -4488,6 +4493,7 @@ async function openApp(){
   const g = document.getElementById('login-gate'); if (g) g.classList.add('hidden');
   afterDataLoaded();
   startRealtime();
+  showBetaTabsIfAllowed();
 }
 async function onGoogleCredential(resp){
   loginErr('');

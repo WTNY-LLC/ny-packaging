@@ -449,6 +449,7 @@
       <button class="tab" data-tab="laborpack">Labor/Packaging</button>
       <button class="tab" data-tab="reports">Reports</button>
       <button class="tab" data-tab="timesheets">Timesheets</button>
+      <button class="tab" data-tab="kelsey" data-beta>Kelsey's page</button>
     </nav>
     <div class="spacer"></div>
     <button class="btn" id="signOutBtn" title="Sign out of this device" onclick="signOut()">Sign out</button>
@@ -611,6 +612,18 @@
       <div class="ts-totbar" id="ts-totbar"></div>
       <div class="scroll"><table id="tsTable"><tbody></tbody></table></div>
     </div>
+  </div>
+
+  <!-- ============ Kelsey's page (beta: hidden from the crew; shows only with ?beta) ============ -->
+  <div id="view-kelsey" hidden>
+    <section>
+      <h2>Kelsey's page<span class="note">only you and Gianni can see this tab</span></h2>
+      <div class="card"><div class="empty">
+        This page is yours to build. Ask your Claude for what you want here, for example
+        "add a table of today's tasks by person" or "show pounds packed per hour this week".
+        The crew won't see it until you say it's ready.
+      </div></div>
+    </section>
   </div>
 </main>
 
